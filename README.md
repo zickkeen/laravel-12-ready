@@ -1,61 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Fondasi Aplikasi Laravel 12
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg?style=flat-square)](https://travis-ci.org/zickkeen/laravel-12-ready)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-## About Laravel
+Fondasi aplikasi ini dibangun menggunakan Laravel 12, dirancang untuk mempercepat pengembangan proyek-proyek PHP full-stack. Dilengkapi dengan fitur autentikasi multi-role dan manajemen pengguna siap pakai, fondasi ini memungkinkan pengembang untuk fokus pada logika bisnis inti aplikasi mereka sejak awal.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **Laravel 12:** Menggunakan framework Laravel versi terbaru.
+* **Autentikasi (Auth) Middleware dengan Multi-Role:** Sistem autentikasi yang aman dengan pengelolaan hak akses berbasis peran.
+* **Manajemen Pengguna:** Modul CRUD (Create, Read, Update, Delete) untuk pengelolaan akun pengguna.
+* **Struktur Proyek Terorganisir:** Mengikuti praktik terbaik Laravel untuk struktur kode yang bersih dan mudah dipelihara.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Persyaratan
 
-## Learning Laravel
+* PHP >= 8.2
+* Composer
+* Database (MySQL, PostgreSQL, SQLite, dll.)
+* Node.js dan npm (untuk asset compilation - opsional)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalasi
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1.  Clone repository ini:
+    ```bash
+    git clone https://github.com/zickkeen/laravel-12-ready.git
+    cd laravel-12-ready
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2.  Install Composer dependencies:
+    ```bash
+    composer install
+    ```
 
-## Laravel Sponsors
+3.  Salin file `.env.example` menjadi `.env` dan konfigurasi detail database Anda:
+    ```bash
+    cp .env.example .env
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4.  Generate application key:
+    ```bash
+    php artisan key:generate
+    ```
 
-### Premium Partners
+5.  Migrasi database dan jalankan seeders (jika ada data default):
+    ```bash
+    php artisan migrate --seed
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+6.  (Opsional) Install dan build assets jika diperlukan:
+    ```bash
+    npm install
+    npm run dev
+    ```
 
-## Contributing
+7.  Jalankan server pengembangan Laravel:
+    ```bash
+    php artisan serve
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Aplikasi Anda akan tersedia di `http://localhost:8000`.
 
-## Code of Conduct
+## Konfigurasi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* **`.env`:** Konfigurasi database, email, dan pengaturan aplikasi lainnya.
+* **`config/auth.php`:** Konfigurasi guard dan provider autentikasi.
+* **`app/Http/Middleware/Authenticate.php`:** Middleware autentikasi dasar.
+* **`app/Http/Middleware/RoleMiddleware.php`:** Middleware untuk otorisasi berdasarkan peran (perlu diimplementasikan sesuai kebutuhan).
+* **`app/Models/User.php`:** Model User dengan relasi dan atribut yang diperlukan.
+* **`database/migrations/users_table.php`:** Skema migrasi untuk tabel users.
+* **`database/seeders/UserSeeder.php`:** Contoh seeder untuk membuat user administrator atau default.
+* **`app/Http/Controllers/Auth/`:** Controller untuk proses autentikasi (login, register, logout).
+* **`app/Http/Controllers/UserController.php`:** Controller untuk manajemen pengguna (CRUD).
+* **`resources/views/auth/`:** View untuk halaman autentikasi.
+* **`resources/views/users/`:** View untuk halaman manajemen pengguna.
 
-## Security Vulnerabilities
+## Penggunaan
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Setelah instalasi selesai, Anda dapat mengakses fitur-fitur berikut:
 
-## License
+* **Autentikasi:** Halaman login dan register (default Laravel UI atau Breeze mungkin perlu diinstal jika view belum sepenuhnya disesuaikan).
+* **Manajemen Pengguna:** Akses halaman manajemen pengguna (biasanya memerlukan otentikasi sebagai administrator) untuk menambah, melihat, mengedit, dan menghapus pengguna.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Ketersediaan:
+
+Fondasi aplikasi Laravel 12 versi 0.1 ini sekarang tersedia dan dapat diakses melalui https://github.com/zickkeen/laravel-12-ready/releases
+
+## Kontak:
+
+Zick Keen <br>
+zickkeen@aka.my.id
+
+***
