@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@aka.my.id',
             'password' => bcrypt('admin123'),
             'role' => 'admin',
-            'avatar_url' => '/storage/avatars/avatar-default-icon.png',
+            'avatar_url' => '/storage/avatars/default.png',
             'active' => true,
         ]);
     }
