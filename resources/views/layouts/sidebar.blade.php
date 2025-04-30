@@ -21,7 +21,7 @@
 
 <div class="bg-dark text-white h-100 p-3">
     <div class="text-center mb-4">
-        <h5 class="text-white">InfraSys</h5>
+        <h5 class="text-white">{{ config('app.name', 'InfraSys') }}</h5>
     </div>
 
     @foreach ($menus as $section => $items)
