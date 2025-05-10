@@ -155,7 +155,7 @@
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <!-- Chart.js integration (example only) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -173,4 +173,4 @@
         data: { labels: ['Jan','Feb','Mar','Apr'], datasets: [{ data: [50, 55, 60, 58], label: 'Disk (%)', borderColor: '#3cba9f', fill: false }] },
     });
 </script>
-@endsection
+@endpush

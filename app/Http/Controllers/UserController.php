@@ -37,6 +37,7 @@ class UserController extends Controller
     ]);
 
     $data['password'] = Hash::make($data['password']);
+    $data['active'] = false;
 
     User::create($data);
 
@@ -82,7 +83,7 @@ class UserController extends Controller
     $user = Auth::user();
 
     if (!$user instanceof \App\Models\User) {
-        abort(500, 'User instance is invalid');
+      abort(500, 'Instance pengguna tidak valid');
     }
 
     if (!$user) {
@@ -109,7 +110,7 @@ class UserController extends Controller
       $filename = $user->id . '.' . $request->avatar->extension();
       $path = $request->avatar->storeAs('avatars', $filename, 'public');
       $user->avatar_url = '/storage/' . $path;
-    }else{
+    } else {
       $user->avatar_url = '/storage/avatars/default.png';
     }
 
@@ -118,5 +119,14 @@ class UserController extends Controller
     $user->save();
 
     return redirect()->route('profile')->with('status', 'Profil berhasil diperbarui.');
+  }
+
+  public function destroy(User $user)
+  {
+    $user->active = false;
+    $user->save();
+    $user->delete();
+
+    return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
   }
 }

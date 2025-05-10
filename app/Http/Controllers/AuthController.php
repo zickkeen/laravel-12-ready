@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -27,13 +28,14 @@ class AuthController extends Controller
         $user = filter_var($login, FILTER_VALIDATE_EMAIL) ? User::where('email', $login)->first() : User::where('username', $login)->first();
 
         // Jika user ditemukan dan password benar
-        if ($user && Auth::attempt(['id' => $user->id, 'password' => $request->password])) {
+        if ($user && Auth::attempt(['id' => $user->id, 'password' => $request->password, 'active' => true])) {
             return redirect()->intended('dashboard');
         }
 
         // Jika gagal login
         return back()->withErrors([
-            'login' => 'The provided credentials do not match our records.',
+            'login' => __('auth.failed'),
+            // 'login' => 'Kredensial yang diberikan tidak valid.',
         ]);
     }
 
@@ -44,7 +46,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Validasi pendaftaran
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -52,18 +53,20 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Membuat user baru
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
+            'active' => false,
         ]);
 
-        // Login otomatis setelah registrasi
+        // Trigger event untuk mengirim email verifikasi
+        event(new Registered($user));
+
         Auth::login($user);
 
-        return redirect()->intended('dashboard');
+        return redirect()->route('verification.notice');
     }
 
     public function logout()

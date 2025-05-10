@@ -9,9 +9,12 @@ class AuthenticateMiddleware
 {
     public function handle($request, Closure $next)
     {
-        // dd("check");
+        // dd($request);
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'You must be logged in to access this page.');
+            // dd($request->fullUrl());
+            $redirectUrl = route('login') . '?redirect_to=' . urlencode($request->fullUrl());
+            // dd($redirectUrl);
+            return redirect($redirectUrl)->with('error', 'Kamu harus login untuk mengakses halaman ini.');
         }
 
         return $next($request);
