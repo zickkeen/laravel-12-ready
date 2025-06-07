@@ -22,4 +22,5 @@ yarn-error.log
 /.vscode
 /.zed
 
-composer.lock
+.cpanel.yml
+error_log
